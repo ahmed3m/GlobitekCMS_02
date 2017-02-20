@@ -221,8 +221,41 @@
   }
 
   function validate_salesperson($salesperson, $errors=array()) {
-    // TODO add validations
+    if (is_blank($salesperson['first_name'])) {
+      $errors[] = "First name cannot be blank.";
+    } elseif (!has_length($salesperson['first_name'], array('min' => 2, 'max' => 255))) {
+      $errors[] = "First name must be between 2 and 255 characters.";
+      // My custom validation
+    } elseif(!preg_match('/\A[A-Za-z\s\-,\.\']+\Z/', $salesperson['first_name'])) {
+      $errors[] = "First name can only contain letters, spaces, and the following symbols: - , . '";
+    }
 
+    if (is_blank($salesperson['last_name'])) {
+      $errors[] = "Last name cannot be blank.";
+    } elseif (!has_length($salesperson['last_name'], array('min' => 2, 'max' => 255))) {
+      $errors[] = "Last name must be between 2 and 255 characters.";
+      // My custom validation
+    } elseif(!preg_match('/\A[A-Za-z\s\-,\.\']+\Z/', $salesperson['last_name'])) {
+      $errors[] = "Last name can only contain letters, spaces, and the following symbols: - , . '";
+    }
+
+    if (is_blank($salesperson['phone'])) {
+      $errors[] = "Phone number cannot be blank.";
+    } elseif (!has_length($salesperson['phone'], array('max' => 255))) {
+      $errors[] = "Phone number must be less than 255 characters.";
+    } elseif(!preg_match('/\A[0-9\s\(\)\-]+\Z/', $salesperson['phone'])) {
+      $errors[] = "Phone number can only contain numbers, spaces, and the following symbols: ( ) -";
+    }
+
+    if (is_blank($salesperson['email'])) {
+      $errors[] = "Email cannot be blank.";
+    } elseif (!has_length($salesperson['email'], array('max' => 255))) {
+      $errors[] = "Email must be less than 255 characters.";
+    } elseif (!has_valid_email_format($salesperson['email'])) {
+      $errors[] = "Email must have a valid format.";
+    } elseif (!preg_match('/\A[A-Za-z0-9\@\.\_\-]+\Z/', $salesperson['email'])) {
+      $errors[] = "Email can only contain letters, numbers, and the following symbols: @ . _ -";
+    }
     return $errors;
   }
 
@@ -236,7 +269,13 @@
       return $errors;
     }
 
-    $sql = ""; // TODO add SQL
+    $sql = "INSERT INTO salespeople ";
+    $sql .= "(first_name, last_name, phone, email) ";
+    $sql .= "VALUES (";
+    $sql .= "'" . $salesperson['first_name'] . "', ";
+    $sql .= "'" . $salesperson['last_name'] . "', ";
+    $sql .= "'" . $salesperson['phone'] . "', ";
+    $sql .= "'" . $salesperson['email'] . "');";
     // For INSERT statments, $result is just true/false
     $result = db_query($db, $sql);
     if($result) {
@@ -354,7 +393,7 @@
     $sql .= "'" . $user['last_name'] . "',";
     $sql .= "'" . $user['email'] . "',";
     $sql .= "'" . $user['username'] . "',";
-    $sql .= "'" . $created_at . "',";
+    $sql .= "'" . $created_at . "'";
     $sql .= ");";
     // For INSERT statments, $result is just true/false
     $result = db_query($db, $sql);
