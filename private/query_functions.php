@@ -213,7 +213,10 @@
       return $errors;
     }
 
-    $sql = ""; // TODO add SQL
+    $sql = "UPDATE territories SET ";
+    $sql .= "name='" . $territory['name'] . "', ";
+    $sql .= "position='" . $territory['position'] . "' ";
+    $sql .= "WHERE id='" . $territory['id'] . "';";
     // For update_territory statments, $result is just true/false
     $result = db_query($db, $sql);
     if($result) {
