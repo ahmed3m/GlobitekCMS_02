@@ -47,7 +47,7 @@ if(is_post_request()) {
     Email:<br />
     <input type="text" name="email" value="<?php echo $user['email']; ?>" /><br />
     <br />
-    <input type="submit" name="submit" value="Create"  />
+    <input type="submit" name="submit" value="Create" />
   </form>
 
 </div>

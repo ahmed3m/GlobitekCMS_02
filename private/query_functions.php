@@ -45,7 +45,24 @@
   }
 
   function validate_state($state, $errors=array()) {
-    // TODO add validations
+    if (is_blank($state['name'])) {
+      $errors[] = "Name cannot be blank.";
+    } elseif (!has_length($state['name'], array('min' => 2, 'max' => 255))) {
+      $errors[] = "Name must be between 2 and 255 characters.";
+      // My custom validation
+    } elseif(!preg_match('/\A[A-Za-z\s\-,\.\'\/]+\Z/', $state['name'])) {
+      $errors[] = "Name can only contain letters, spaces, and the following symbols: - , . ' /";
+    }
+
+    if (is_blank($state['code'])) {
+      $errors[] = "Code cannot be blank.";
+      // My custom validation
+    } elseif (!has_length($state['code'], array('min' => 2, 'max' => 3))) {
+      $errors[] = "Code must have two or three characters.";
+      // My custom validation
+    } elseif(!preg_match('/\A[A-Za-z]+\Z/', $state['code'])) {
+      $errors[] = "Code can only contain letters.";
+    }
 
     return $errors;
   }
@@ -60,7 +77,11 @@
       return $errors;
     }
 
-    $sql = ""; // TODO add SQL
+    $sql = "INSERT INTO states ";
+    $sql .= "(name, code) ";
+    $sql .= "VALUES (";
+    $sql .= "'" . $state['name'] . "', ";
+    $sql .= "'" . $state['code'] . "');";
     // For INSERT statments, $result is just true/false
     $result = db_query($db, $sql);
     if($result) {
