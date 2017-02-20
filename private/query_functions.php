@@ -105,7 +105,10 @@
       return $errors;
     }
 
-    $sql = ""; // TODO add SQL
+    $sql = "UPDATE states SET ";
+    $sql .= "name='" . $state['name'] . "', ";
+    $sql .= "code='" . $state['code'] . "' ";
+    $sql .= "WHERE id='" . $state['id'] . "';";
     // For update_state statments, $result is just true/false
     $result = db_query($db, $sql);
     if($result) {
