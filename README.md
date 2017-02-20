@@ -69,13 +69,13 @@ The following advanced user stories are optional:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/cTA2kF2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+There was one bug in the starting code as there was an additional comma in one of the users sql queries. Aside from that, I was just getting used to the interaction between diferent files since I haven't done web development before and I wasn't familiar with that.
 
 ## License
 
