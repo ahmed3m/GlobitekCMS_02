@@ -28,6 +28,7 @@
   // Find all states, ordered by name
   function find_states_for_country_id($country_id=0) {
     global $db;
+    $country_id = db_escape($db, $country_id);
     $sql = "SELECT * FROM states ";
     $sql .= "WHERE country_id='" . $country_id . "' ";
     $sql .= "ORDER BY name ASC;";
@@ -38,6 +39,7 @@
   // Find state by ID
   function find_state_by_id($id=0) {
     global $db;
+    $id = db_escape($db, $id);
     $sql = "SELECT * FROM states ";
     $sql .= "WHERE id='" . $id . "';";
     $state_result = db_query($db, $sql);
@@ -76,7 +78,7 @@
     if (!empty($errors)) {
       return $errors;
     }
-
+    $state['name'] = db_escape($db, $state['name']);
     $sql = "INSERT INTO states ";
     $sql .= "(name, code) ";
     $sql .= "VALUES (";
@@ -104,7 +106,7 @@
     if (!empty($errors)) {
       return $errors;
     }
-
+    $state['name'] = db_escape($db, $state['name']);
     $sql = "UPDATE states SET ";
     $sql .= "name='" . $state['name'] . "', ";
     $sql .= "code='" . $state['code'] . "' ";
@@ -148,6 +150,7 @@
   // Find territory by ID
   function find_territory_by_id($id=0) {
     global $db;
+    $id = db_escape($db, $id);
     $sql = "SELECT * FROM territories ";
     $sql .= "WHERE id='" . $id . "';";
     $territory_result = db_query($db, $sql);
@@ -183,7 +186,8 @@
     if (!empty($errors)) {
       return $errors;
     }
-
+    $territory['name'] = db_escape($db, $territory['name']);
+    $territory['state_id'] = db_escape($db, $territory['state_id']);
     $sql = "INSERT INTO territories ";
     $sql .= "(name, state_id, position) ";
     $sql .= "VALUES (";
@@ -212,7 +216,7 @@
     if (!empty($errors)) {
       return $errors;
     }
-
+    $territory['name'] = db_escape($db, $territory['name']);
     $sql = "UPDATE territories SET ";
     $sql .= "name='" . $territory['name'] . "', ";
     $sql .= "position='" . $territory['position'] . "' ";
@@ -260,6 +264,7 @@
   // Find salesperson using id
   function find_salesperson_by_id($id=0) {
     global $db;
+    $id = db_escape($db, $id);
     $sql = "SELECT * FROM salespeople ";
     $sql .= "WHERE id='" . $id . "';";
     $salespeople_result = db_query($db, $sql);
@@ -314,7 +319,8 @@
     if (!empty($errors)) {
       return $errors;
     }
-
+    $salesperson['first_name'] = db_escape($db, $salesperson['first_name']);
+    $salesperson['last_name'] = db_escape($db, $salesperson['last_name']);
     $sql = "INSERT INTO salespeople ";
     $sql .= "(first_name, last_name, phone, email) ";
     $sql .= "VALUES (";
@@ -344,7 +350,9 @@
     if (!empty($errors)) {
       return $errors;
     }
-
+    $salesperson['first_name'] = db_escape($db, $salesperson['first_name']);
+    $salesperson['last_name'] = db_escape($db, $salesperson['last_name']);
+    $salesperson['id'] = db_escape($db, $salesperson['id']);
     $sql = "UPDATE salespeople SET ";
     $sql .= "first_name='" . $salesperson['first_name'] . "', ";
     $sql .= "last_name='" . $salesperson['last_name'] . "', ";
@@ -394,6 +402,7 @@
   // Find user using id
   function find_user_by_id($id=0) {
     global $db;
+    $id = db_escape($db, $id);
     $sql = "SELECT * FROM users WHERE id='" . $id . "' LIMIT 1;";
     $users_result = db_query($db, $sql);
     return $users_result;
@@ -448,6 +457,9 @@
       return $errors;
     }
 
+    $user['first_name'] = db_escape($db, $user['first_name']);
+    $user['last_name'] = db_escape($db, $user['last_name']);
+
     $created_at = date("Y-m-d H:i:s");
     $sql = "INSERT INTO users ";
     $sql .= "(first_name, last_name, email, username, created_at) ";
@@ -480,6 +492,10 @@
     if (!empty($errors)) {
       return $errors;
     }
+
+    $user['first_name'] = db_escape($db, $user['first_name']);
+    $user['last_name'] = db_escape($db, $user['last_name']);
+    $user['id'] = db_escape($db, $user['id']);
 
     $sql = "UPDATE users SET ";
     $sql .= "first_name='" . $user['first_name'] . "', ";
