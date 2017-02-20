@@ -168,8 +168,8 @@
       $errors[] = "Position cannot be blank.";
     }
       // My custom validation
-    elseif(!preg_match('/\A[0-9\-,\.]+\Z/', $territory['position'])) {
-      $errors[] = "Position can only contain numbers.";
+    elseif(!preg_match('/\A[0-9\-]+\Z/', $territory['position'])) {
+      $errors[] = "Position can only contain integers.";
     }
     return $errors;
   }
@@ -416,6 +416,16 @@
       $errors[] = "Last name can only contain letters, spaces, and the following symbols: - , . '";
     }
 
+    if (is_blank($user['username'])) {
+      $errors[] = "Username cannot be blank.";
+    } elseif (!has_length($user['username'], array('max' => 255))) {
+      $errors[] = "Username must be less than 255 characters.";
+    } elseif (!preg_match('/\A[A-Za-z0-9\_]+\Z/', $user['username'])) {
+      $errors[] = "Username can only contain letters, numbers, and the following symbol: _";
+    } elseif (!has_length($user['username'], ['min' => 8, 'max' => 255])) {
+      $errors[] = "Username must be between 8 and 255 characters.";
+    }
+
     if (is_blank($user['email'])) {
       $errors[] = "Email cannot be blank.";
     } elseif (!has_valid_email_format($user['email'])) {
@@ -424,20 +434,6 @@
       $errors[] = "Email can only contain letters, numbers, and the following symbols: @ . _ -";
     } elseif (!has_length($user['email'], ['min' => 3, 'max' => 255])) {
       $errors[] = "Email must be between 3 and 255 characters.";
-    }
-
-    $sql = "SELECT username FROM users WHERE username='" . $user['username'] . "';";
-    $result = db_query($db, $sql);
-    if(db_num_rows($result)) { // returns true if username exists/number of rows > 0
-      $errors[] = "Username already exists.";
-    } elseif (is_blank($user['username'])) {
-      $errors[] = "Username cannot be blank.";
-    } elseif (!has_length($user['username'], array('max' => 255))) {
-      $errors[] = "Username must be less than 255 characters.";
-    } elseif (!preg_match('/\A[A-Za-z0-9\_]+\Z/', $user['username'])) {
-      $errors[] = "Username can only contain letters, numbers, and the following symbol: _";
-    } elseif (!has_length($user['username'], ['min' => 8, 'max' => 255])) {
-      $errors[] = "Username must be between 8 and 255 characters.";
     }
     return $errors;
   }
