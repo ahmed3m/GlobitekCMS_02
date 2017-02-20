@@ -155,8 +155,22 @@
   }
 
   function validate_territory($territory, $errors=array()) {
-    // TODO add validations
+    if (is_blank($territory['name'])) {
+      $errors[] = "Name cannot be blank.";
+    } elseif (!has_length($territory['name'], array('min' => 2, 'max' => 255))) {
+      $errors[] = "Name must be between 2 and 255 characters.";
+      // My custom validation
+    } elseif(!preg_match('/\A[A-Za-z\s\-,\.\'\/]+\Z/', $territory['name'])) {
+      $errors[] = "Name can only contain letters, spaces, and the following symbols: - , . ' /";
+    }
 
+    if (is_blank($territory['position'])) {
+      $errors[] = "Position cannot be blank.";
+    }
+      // My custom validation
+    elseif(!preg_match('/\A[0-9\-,\.]+\Z/', $territory['position'])) {
+      $errors[] = "Position can only contain numbers.";
+    }
     return $errors;
   }
 
@@ -170,7 +184,12 @@
       return $errors;
     }
 
-    $sql = ""; // TODO add SQL
+    $sql = "INSERT INTO territories ";
+    $sql .= "(name, state_id, position) ";
+    $sql .= "VALUES (";
+    $sql .= "'" . $territory['name'] . "', ";
+    $sql .= "'" . $territory['state_id'] . "', ";
+    $sql .= "'" . $territory['position'] . "');";
     // For INSERT statments, $result is just true/false
     $result = db_query($db, $sql);
     if($result) {
