@@ -18,7 +18,7 @@ $state = db_fetch_assoc($state_result);
 <?php include(SHARED_PATH . '/header.php'); ?>
 
 <div id="main-content">
-  <a href="../states/show.php?id=<?php echo u($state_id); ?>">Back to State Details</a>
+  <a href="../states/show.php?id=<?php echo u($territory['state_id']); ?>">Back to State Details</a>
   <br />
 
   <h1>Territory: <?php echo h($territory['name']); ?></h1>
