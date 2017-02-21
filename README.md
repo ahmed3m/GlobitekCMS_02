@@ -75,7 +75,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-There was one bug in the starting code as there was an additional comma in one of the users sql queries. Aside from that, I was just getting used to the interaction between diferent files since I haven't done web development before and I wasn't familiar with that.
+There was one bug in the starting code as there was an additional comma in one of the users sql queries. Aside from that, I was just getting used to the interaction between difFerent files since I haven't done web development before and I wasn't familiar with that.
 
 ## License
 
