@@ -8,7 +8,10 @@ $id = $_GET['id'];
 $territory_result = find_territory_by_id($id);
 // No loop, only one result
 $territory = db_fetch_assoc($territory_result);
-$state_id = $territory['state_id'];
+$state_result = find_state_by_id($territory['state_id']);
+// No loop, only one result
+$state = db_fetch_assoc($state_result);
+
 ?>
 
 <?php $page_title = 'Staff: Territory of ' . $territory['name']; ?>
@@ -27,8 +30,8 @@ $state_id = $territory['state_id'];
     echo "<td>" . h($territory['name']) . "</td>";
     echo "</tr>";
     echo "<tr>";
-    echo "<td>State ID: </td>";
-    echo "<td>" . h($territory['state_id']) . "</td>";
+    echo "<td>State: </td>";
+    echo "<td>" . h($state['name']) . "</td>";
     echo "</tr>";
     echo "<tr>";
     echo "<td>Position: </td>";
