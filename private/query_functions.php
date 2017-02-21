@@ -425,7 +425,13 @@
       $errors[] = "Last name can only contain letters, spaces, and the following symbols: - , . '";
     }
 
-    if (is_blank($user['username'])) {
+    global $db;
+    $sql = "SELECT * FROM users WHERE username='" . db_escape($db, $user['username']) . "';";
+    $result = db_query($db, $sql);
+    // returns true if username exists/number of rows > 0 AND fetched user is not current user
+    if(db_num_rows($result) && db_fetch_assoc($result) != $user) {
+      $errors[] = "Username already exists.";
+    } elseif (is_blank($user['username'])) {
       $errors[] = "Username cannot be blank.";
     } elseif (!has_length($user['username'], array('max' => 255))) {
       $errors[] = "Username must be less than 255 characters.";
